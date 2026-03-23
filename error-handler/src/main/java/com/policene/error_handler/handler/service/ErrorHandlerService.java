@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static com.policene.error_handler.handler.enums.CommonErrors.findLimitByMessage;
 import static com.policene.error_handler.handler.enums.CommonErrors.isCriticalError;
@@ -93,6 +94,7 @@ public class ErrorHandlerService {
     public void insertError (ErrorMock error) {
         template.opsForHash().put(error.message(), "count", "1");
         template.opsForHash().put(error.message(), "cause", error.cause());
+        template.expire(error.message(), 20, TimeUnit.MINUTES);
         log.info("Erro adicionado: {}", error);
     }
 
