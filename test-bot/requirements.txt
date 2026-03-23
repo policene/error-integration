@@ -1,0 +1,3 @@
+discord
+redis
+dotenv
